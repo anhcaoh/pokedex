@@ -1,3 +1,23 @@
+![App running](/public/sample-app-running.png?raw=true 'App running')
+
+## What's not completed:
+
+- Thorough testings strategy
+- A sleek and intuitive layout that resembles a Pokedex
+- Able to see other evolutions of Pokemon and be able to navigate to specific
+  Pokemon in the evolution chain.
+- Search by Move and return the list of Pokemon names on which can be clicked on to search furthur in details
+
+## Comments / Notes:
+
+Project idea is great. There are more improvements regarding features on how quickly to search for any pokemon by details (moves, abiltities)
+
+## <br />
+
+---
+
+## <br />
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
