@@ -18,10 +18,19 @@ export interface IPokedexProps {
 }
 const Pokedex: React.FC<IPokedexProps> = ({ children, ...rest }) => {
   const [query, setQuery] = useState('')
+  const [secondarySearch, setSecondarySearch] = useState(null)
   useEffect(() => setQuery(query), [query])
   const handleOnSearch = useCallback(
-    (payload: { query: React.SetStateAction<string> }) =>
-      setQuery(payload.query),
+    (payload: {
+      query: React.SetStateAction<string>
+      queryType: string
+      results: any
+    }) => {
+      setQuery(payload.query)
+      if (payload.queryType === 'move' && payload.results) {
+        setSecondarySearch(payload.results)
+      }
+    },
     []
   )
   return (
@@ -29,7 +38,7 @@ const Pokedex: React.FC<IPokedexProps> = ({ children, ...rest }) => {
       <PokemonContainer>
         <Space direction="vertical" align="center" size="large">
           <Typography.Title className={styles.title}>Pokédex</Typography.Title>
-          <Search onSearch={handleOnSearch} />
+          <Search onSearch={handleOnSearch} secondarySearch={secondarySearch} />
           <Pokemon name={query} />
           <>{children}</>
         </Space>

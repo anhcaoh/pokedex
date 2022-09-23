@@ -5,7 +5,7 @@
   This Component is bootstrapped from .templates/Component
 */
 
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import useDebounce from '@/hooks/useDebounce'
 import useSearch from '@/hooks/useSearch'
 import { SearchOutlined } from '@ant-design/icons'
@@ -18,10 +18,16 @@ export interface ISearchProps {
   className?: string
   children?: JSX.Element | JSX.Element[]
   onSearch?: (payload: any) => void
+  secondarySearch?: any
 }
 export type SearchQueryTypes = 'recent' | 'name' | 'move'
 
-const Search: React.FC<ISearchProps> = ({ onSearch, children, ...rest }) => {
+const Search: React.FC<ISearchProps> = ({
+  onSearch,
+  secondarySearch,
+  children,
+  ...rest
+}) => {
   const [, , setQuery, setQueryType] = useSearch('', '', onSearch)
   // `setQueryType` will trigger a new search with new query type i.e. `name | move`
   const searchedQueries = useSelector((state: RootState) => [
@@ -35,38 +41,47 @@ const Search: React.FC<ISearchProps> = ({ onSearch, children, ...rest }) => {
       queryType: SearchQueryTypes | string
     }[]
   >([])
-  const renderSearchOptions = (
-    queryType: SearchQueryTypes,
-    queries: string[]
-  ) => {
-    if (queryType === 'recent' && queries.length) {
+  useEffect(() => {
+    if (secondarySearch) {
+      const additionalSearchOptions = secondarySearch[0].map((item: any) => {
+        return { label: item.name, queryType: 'move' }
+      })
+      const _searchOptions = [...options, ...additionalSearchOptions]
+      setOptions(_searchOptions)
+    }
+  }, [secondarySearch, options])
+  const renderSearchOptions = useCallback(
+    (queryType: SearchQueryTypes, queries: string[]) => {
+      if (queryType === 'recent' && queries.length) {
+        return (
+          <>
+            <Space direction="vertical">
+              <Typography.Text type="secondary">Recent</Typography.Text>
+              <Space wrap direction="horizontal" size="small">
+                {queries.map((query: string) => (
+                  <Tag
+                    key={uuidv4()}
+                    onClick={() => {
+                      onSearch && onSearch({ query })
+                    }}
+                  >
+                    {query}
+                  </Tag>
+                ))}
+              </Space>
+            </Space>
+          </>
+        )
+      }
       return (
         <>
-          <Space direction="vertical">
-            <Typography.Text type="secondary">Recent</Typography.Text>
-            <Space wrap direction="horizontal" size="small">
-              {queries.map((query: string) => (
-                <Tag
-                  key={uuidv4()}
-                  onClick={() => {
-                    onSearch && onSearch({ query })
-                  }}
-                >
-                  {query}
-                </Tag>
-              ))}
-            </Space>
-          </Space>
+          <Typography.Text type="secondary">{queryType}</Typography.Text>
+          <Typography>{queries[0]}</Typography>
         </>
       )
-    }
-    return (
-      <>
-        <Typography.Text type="secondary">{queryType}</Typography.Text>
-        <Typography>{queries[0]}</Typography>
-      </>
-    )
-  }
+    },
+    [onSearch]
+  )
   const handleOnChangeQuery = useDebounce<React.ChangeEvent<HTMLInputElement>>(
     ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(value?.toLowerCase().trim())

@@ -1,7 +1,4 @@
-import Pokemon from '@/components/PokemonStats'
 import Pokedex from '@/features/Pokedex'
-import Search from '@/features/Search'
-import { Space, Typography } from 'antd'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -11,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Pokedex</title>
+        <title>Pokédex - Search for Pokémon Stats</title>
         <meta name="description" content="Pokedex: search your Pokemon" />
         <link rel="icon" href="https://pokemondb.net/favicon.ico" />
       </Head>

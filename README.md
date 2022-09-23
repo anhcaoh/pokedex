@@ -4,13 +4,12 @@
 
 - Thorough testings strategy
 - A sleek and intuitive layout that resembles a Pokedex
-- Able to see other evolutions of Pokemon and be able to navigate to specific
-  Pokemon in the evolution chain.
-- Search by Move and return the list of Pokemon names on which can be clicked on to search furthur in details
+- Able to see other evolutions of Pokemon and be able to navigate to specific Pokemon in the evolution chain.
+- Search by `Move` and return the list of Pokemon names which can be clicked on to search furthur in details
 
 ## Comments / Notes:
 
-Project idea is great. There are more improvements regarding features on how quickly to search for any pokemon by details (moves, abiltities)
+The project idea is great. There are many more features and UI/UX enhancements we can add on. For example, Search for pokemon by stats details (moves, abiltities, types, etc.)
 
 ## <br />
 
