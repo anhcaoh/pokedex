@@ -1,8 +1,10 @@
+import Input from "@/app/componens/Input";
+
 const Pokedex = () => {
   return (
     <div className="container m-auto w-1/2">
-      <h2>Pokedex</h2>
-      <input className="p-4 m-2" autoFocus />
+      <h2 className="text-3xl">Pokedex</h2>
+      <Input autoFocus placeholder="Search Pokemon" />
     </div>
   );
 };
