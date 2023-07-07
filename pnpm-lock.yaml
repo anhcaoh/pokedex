@@ -10,6 +10,7 @@ specifiers:
   '@types/react-dom': 18.2.6
   autoprefixer: ^10.4.14
   axios: ^1.4.0
+  clsx: ^1.2.1
   eslint: 8.44.0
   eslint-config-next: 13.4.8
   next: 13.4.8
@@ -19,6 +20,7 @@ specifiers:
   react-dom: 18.2.0
   tailwindcss: ^3.3.2
   typescript: 5.1.6
+  usehooks-ts: ^2.9.1
 
 dependencies:
   '@tanstack/query-core': 4.29.19
@@ -27,6 +29,7 @@ dependencies:
   '@types/react': 18.2.14
   '@types/react-dom': 18.2.6
   axios: 1.4.0
+  clsx: 1.2.1
   eslint: 8.44.0
   eslint-config-next: 13.4.8_iqf7tbmerllfqanu4l3d6aqdn4
   next: 13.4.8_biqbaboplfbrettd7655fr4n2y
@@ -34,6 +37,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   typescript: 5.1.6
+  usehooks-ts: 2.9.1_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
   '@tanstack/eslint-plugin-query': 4.29.9
@@ -715,6 +719,11 @@ packages:
   /clone/2.1.2:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
+    dev: false
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
     dev: false
 
   /color-convert/2.0.1:
@@ -2749,6 +2758,17 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+
+  /usehooks-ts/2.9.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-2FAuSIGHlY+apM9FVlj8/oNhd+1y+Uwv5QNkMQz1oSfdHk4PXo1qoCw9I5M7j0vpH8CSWFJwXbVPeYDjLCx9PA==}
+    engines: {node: '>=16.15.0', npm: '>=8'}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0  || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}

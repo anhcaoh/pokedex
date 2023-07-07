@@ -17,7 +17,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/components/*": ["./src/app/components/*"],
-      "@/features/*": ["./src/app/features/*"]
+      "@/features/*": ["./src/app/features/*"],
+      "@/constants/*": ["./src/app/constants/*"],
+      "@/utils/*": ["./src/app/utils/*"]
     },
     "plugins": [
       {
