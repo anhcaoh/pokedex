@@ -12,7 +12,7 @@ export interface ISearchResults {
   onClick?: any;
 }
 
-const SearchResultsItem = ({
+export const SearchResultsItem = ({
   classNames,
   item,
   index,
@@ -35,7 +35,9 @@ const SearchResultsItem = ({
       )}
       <li
         role="option"
-        className={`${listItem && listItem(item, currentValue)}`}
+        className={`${listItem && listItem(item, currentValue)} ${
+          !onClick && "cursor-auto"
+        }`}
         key={item?.id}
         aria-selected={index === 0}
         tabIndex={0}
@@ -53,10 +55,25 @@ const SearchResultsItem = ({
                 className="inline"
                 alt={item?.name}
               />
-              <span>{item?.name}</span>
+              <span className="text-xl font-bold">{item?.name}</span>
+
+              {/* Types */}
+              <ul className="ml-3 inline" title="Types">
+                {item?.types?.map(({ type: { name } }: any) => (
+                  <li
+                    key={name}
+                    className="inline mr-2 rounded-sm p-1 bg-slate-100"
+                  >
+                    {name}
+                  </li>
+                ))}
+              </ul>
               {/* Abilities */}
-              <ul className="pb-2 abilities overflow-x-scroll">
-                <li className="inline mx-4">⚡️</li>
+              <ul
+                className="pb-2 abilities overflow-x-scroll"
+                title="Abilities"
+              >
+                <li className="mx-4 inline">⚡️</li>
                 {item?.abilities?.map(({ ability: { name } }: any) => {
                   return (
                     <li
@@ -69,7 +86,7 @@ const SearchResultsItem = ({
                 })}
               </ul>
               {/* Moves */}
-              <ul className="pb-2 moves overflow-x-scroll">
+              <ul className="pb-2 moves overflow-x-scroll" title="Moves">
                 <li className="inline mx-4">✨</li>
                 {item?.moves?.map(({ move: { name } }: any) => {
                   return (

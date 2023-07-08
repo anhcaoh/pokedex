@@ -3,7 +3,6 @@ import { Pokemon } from "pokedex-promise-v2";
 import {
   ChangeEvent,
   Dispatch,
-  ReactNode,
   Ref,
   useCallback,
   useContext,
@@ -25,8 +24,6 @@ export interface IListItem {
 }
 export type IListItemWithPokemon = IListItem & Pokemon;
 export type SearchClassNames = {
-  cta?: string;
-  ctaArrowIcon?: string;
   boundary?: string;
   searchInput?: string;
   listContainer?: string;
@@ -61,7 +58,6 @@ export interface ISearch {
   className?: string;
   classNames?: SearchClassNames;
   onClick: Dispatch<any>;
-  slot?: ReactNode;
 }
 const _Search = ({
   innerRef,
@@ -74,10 +70,7 @@ const _Search = ({
   list,
   classNames = {},
   error,
-  renderListItem,
   onClick,
-  slot,
-  ...rest
 }: ISearch) => {
   const [searchValue, setSearchValue] = useState("");
   const [currentValue, setCurrentValue] = useState(value || defaultValue);
@@ -113,19 +106,7 @@ const _Search = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
 
-  const {
-    boundary,
-    searchInput,
-    listContainer,
-    listEmpty,
-    listItem,
-    listItemContainer,
-    listItemContent,
-    listItemHeading,
-    listItemHeading2,
-    listItemName,
-    error: errorClsx,
-  } = classNames;
+  const { boundary, searchInput, error: errorClsx } = classNames;
 
   const handleOnClickListItem = useCallback(
     (item: IListItemWithPokemon) => {
@@ -162,6 +143,7 @@ const _Search = ({
               classNames={classNames}
               searchValue={searchValue}
               currentValue={currentValue}
+              onClick={handleOnClickListItem}
             />
           </>
         )) ||
