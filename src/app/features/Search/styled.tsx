@@ -13,9 +13,9 @@ const SearchStyled = forwardRef(function SearchStyled({
     boundary: clsx(
       "search z-30 mt-2 h-fit w-full rounded-md dark:bg-slate-800"
     ),
-    inputSearchIcon: clsx("ml-1.5 mr-2 inline-block h-8 w-5 text-gray-500"),
+    searchInput: clsx("w-full"),
     listContainer: clsx(
-      "relative mt-1 max-h-72 overflow-y-auto rounded-md bg-white shadow-md dark:bg-slate-800"
+      "relative mt-1 max-h-72 overflow-y-auto scroll-smooth snap-y rounded-md bg-white shadow-md dark:bg-slate-800"
     ),
     listEmpty: clsx(
       "relative w-full p-4 px-3 pr-4 text-left text-center text-sm text-muted dark:border-b dark:border-slate-700 dark:bg-slate-800 dark:text-gray-400"
@@ -24,10 +24,10 @@ const SearchStyled = forwardRef(function SearchStyled({
       // (item: { value: string }, current: { value: string }) =>
       clsx(
         // { "bg-claret text-white": item.value === current?.value },
-        "items-left relative w-full cursor-pointer p-2 hover:bg-[#f9f9f9] dark:border-slate-700 dark:bg-slate-800 dark:text-white hover:dark:bg-slate-700",
+        "items-left relative w-full cursor-pointer p-2 !pt-0 hover:bg-[#f9f9f9] dark:border-slate-700 dark:bg-slate-800 dark:text-white hover:dark:bg-slate-700",
         `!${className ?? ""}` //TODO implement twMerge
       ),
-    listItemContainer: clsx(""),
+    listItemContainer: clsx("w-inherit"),
     listItemContent: clsx("truncate"),
     listItemHeading: clsx(
       "mt-2 border-t border-gray-100 pt-2 dark:border-slate-700"

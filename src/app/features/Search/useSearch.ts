@@ -10,29 +10,16 @@ import { SearchRecentContext } from "./SearchRecentContext";
 
 const fetchSearchPokemon = async (query: string) => {
   const { data } = await axiosInstance.get(
-    `${SEARCH_POKEMON_ENDPOINT}/?q=${query}`
+    `${SEARCH_POKEMON_ENDPOINT}/?name=${query}`
   );
-  return data
-    ?.map(({ id, firstName, lastName, contactName, email, phone }: any) => {
-      const fullName =
-        firstName || lastName ? `${firstName} ${lastName}` : contactName;
-      return (
-        id && {
-          id: id,
-          name: fullName,
-          email,
-          phone,
-        }
-      );
-    })
-    .filter((truthful: any) => truthful);
+  return data;
 };
 const useSearch = (query: string): UseQueryResult<any, Error> => {
   const searchRecentContext = useContext(SearchRecentContext);
   const { recentSearches, setRecentSearches } = searchRecentContext!;
   return useQuery({
     queryKey: [SEARCH_POKEMON, query],
-    queryFn: () => fetchSearchPokemon(query),
+    queryFn: () => fetchSearchPokemon(query?.toLowerCase()),
     enabled: !!query,
     onSettled: (data) => {
       if (data?.length) {

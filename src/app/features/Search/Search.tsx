@@ -1,13 +1,8 @@
 import Input from "@/components/Input";
-import {
-  SEARCH_NO_RESULTS,
-  SEARCH_RECENT,
-  SEARCH_RESULTS,
-} from "@/constants/labels";
+import { Pokemon } from "pokedex-promise-v2";
 import {
   ChangeEvent,
   Dispatch,
-  Fragment,
   ReactNode,
   Ref,
   useCallback,
@@ -20,25 +15,20 @@ import { useOnClickOutside } from "usehooks-ts";
 import SearchRecentContextWithProvider, {
   SearchRecentContext,
 } from "./SearchRecentContext";
+import SearchResults from "./SearchResults";
 import useSearch from "./useSearch";
 export interface IListItem {
   id?: string;
-  firstName?: string;
-  lastName?: string;
-  contactName?: string;
   name: string;
   value: string | number | null;
-  phone?: string;
-  email?: string;
   onClick?: Function;
-  shortcut?: ReactNode;
 }
+export type IListItemWithPokemon = IListItem & Pokemon;
 export type SearchClassNames = {
   cta?: string;
   ctaArrowIcon?: string;
   boundary?: string;
-  inputContainer?: string;
-  inputSearchIcon?: string;
+  searchInput?: string;
   listContainer?: string;
   listEmpty?: string;
   listItem?: (
@@ -66,7 +56,7 @@ export interface ISearch {
   value?: IListItem | null;
   defaultValue?: IListItem | null;
   autoFocus?: boolean;
-  list?: IListItem[];
+  list?: IListItemWithPokemon[];
   renderListItem?: Function;
   className?: string;
   classNames?: SearchClassNames;
@@ -125,8 +115,7 @@ const _Search = ({
 
   const {
     boundary,
-    inputContainer,
-    inputSearchIcon,
+    searchInput,
     listContainer,
     listEmpty,
     listItem,
@@ -135,13 +124,11 @@ const _Search = ({
     listItemHeading,
     listItemHeading2,
     listItemName,
-    listItemId,
-    listItemShortcut,
     error: errorClsx,
   } = classNames;
 
   const handleOnClickListItem = useCallback(
-    (item: IListItem) => {
+    (item: IListItemWithPokemon) => {
       item.onClick && item.onClick(item); //from list item from either static vs remote list
       setCurrentValue(item);
       onClick && onClick(item); //callback from parent to set selected pokemon
@@ -156,113 +143,30 @@ const _Search = ({
     <>
       <div className={boundary} ref={boundaryRef}>
         {/* Search input  */}
-        <div className={inputContainer}>
-          <Input
-            id={id}
-            name={name}
-            onFocus={() => setSearchInputOnFocus(true)}
-            value={searchValue}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setSearchValue(e.target.value);
-            }}
-            placeholder="Search Pokemon"
-          />
-        </div>
-
+        <Input
+          className={searchInput}
+          id={id}
+          name={name}
+          onFocus={() => setSearchInputOnFocus(true)}
+          value={searchValue}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            setSearchValue(e.target.value);
+          }}
+          placeholder="Search Pokemon"
+        />
         {/* Search results */}
         {(searchInputOnFocus && (
           <>
-            <ul
-              {...rest}
-              className={listContainer}
-              role="listbox"
-              tabIndex={-1}
-            >
-              {/* Search results */}
-              {filteredList?.map((item, index) => (
-                <Fragment key={item?.id}>
-                  {index === 0 && (
-                    <li>
-                      <h2 className={listItemHeading2}>{SEARCH_RESULTS}</h2>
-                    </li>
-                  )}
-                  <li
-                    role="option"
-                    className={`${
-                      listItem && listItem(item, id || currentValue)
-                    }`}
-                    key={item?.id}
-                    aria-selected={index === 0}
-                    tabIndex={0}
-                    autoFocus={
-                      (index === 0 && !currentValue) || currentValue === item
-                    }
-                    onClick={() => {
-                      handleOnClickListItem(item);
-                    }}
-                  >
-                    <div className={listItemContainer}>
-                      <div className={listItemContent}>
-                        <div className={listItemName}>{item?.name}</div>
-                        <div className={listItemId}>{item?.id}</div>
-                      </div>
-                      {renderListItem && renderListItem(item)}
-                    </div>
-                    {(item?.shortcut && (
-                      <span className={listItemShortcut}>{item?.shortcut}</span>
-                    )) ||
-                      null}
-                  </li>
-                </Fragment>
-              ))}
-              {/* No search results */}
-              {searchValue && !filteredList?.length && (
-                <li className={`${listEmpty}`}>
-                  {SEARCH_NO_RESULTS} &quot;{searchValue}&quot;
-                </li>
-              )}
-              {/* Recent Searches */}
-              {recentSearches?.map((item: any, index: number) => {
-                return (
-                  <Fragment key={item?.id}>
-                    {index === 0 && (
-                      <li
-                        className={
-                          (filteredList?.length && listItemHeading) || ""
-                        }
-                      >
-                        <h2 className={listItemHeading2}>{SEARCH_RECENT}</h2>
-                      </li>
-                    )}
-                    <li
-                      role="option"
-                      aria-selected={false}
-                      className={`${
-                        listItem && listItem(item, id || currentValue)
-                      }`}
-                      key={item?.id}
-                      onClick={() => {
-                        handleOnClickListItem(item);
-                      }}
-                    >
-                      <div className={listItemContainer}>
-                        <div className={listItemContent}>
-                          <div className={listItemName}>{item?.name}</div>
-                          <div className={listItemId}>{item?.id}</div>
-                        </div>
-                        {renderListItem && renderListItem(item)}
-                      </div>
-                    </li>
-                  </Fragment>
-                );
-              })}
-            </ul>
-            {(slot && slot) || null}
+            <SearchResults
+              results={filteredList!}
+              classNames={classNames}
+              searchValue={searchValue}
+              currentValue={currentValue}
+            />
           </>
         )) ||
           null}
       </div>
-
       {/* display error if any */}
       {error && <label className={errorClsx}>{error}</label>}
     </>
