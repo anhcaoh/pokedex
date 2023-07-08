@@ -1,3 +1,23 @@
+# Pokedex
+
+## Completed:
+
+Basic search of pokemon by name
+
+Show recent searches persisted via localStorage
+
+## Not completed:
+
+Unit test and end-to-end testings
+
+Redux implementation (used react-query and context here instead)
+
+Fuzzy search with auto complete of Pokemon name
+
+Search pokemon by moves
+
+Revamp `<Pokemon />` card upon search results item on clicked (currently reuse `<SearchResultsItem />`)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
